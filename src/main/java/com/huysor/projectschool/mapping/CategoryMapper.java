@@ -1,7 +1,7 @@
-package com.example.huysor.projectschool.mapping;
+package com.huysor.projectschool.mapping;
 
-import com.example.huysor.projectschool.dto.CategoryDTO;
-import com.example.huysor.projectschool.entity.Category;
+import com.huysor.projectschool.dto.CategoryDTO;
+import com.huysor.projectschool.entity.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
