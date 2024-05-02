@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 @Data
 public class CategoryDTO {
-    private Long id;
+    private Long id=null;
     private String code;
     private String name;
     private LocalDateTime createTime;
