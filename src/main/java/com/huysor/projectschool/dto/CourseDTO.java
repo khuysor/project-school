@@ -1,16 +1,12 @@
-package com.huysor.projectschool.entity;
+package com.huysor.projectschool.dto;
 
-import jakarta.persistence.*;
+
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-@Entity
-@Table(name = "tbl_course")
 @Data
-public class Course {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CourseDTO {
     private Long id;
     private String courseName;
     private String teacherName;
@@ -18,7 +14,5 @@ public class Course {
     private BigDecimal price;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
-    @ManyToOne
-    @JoinColumn(name = "cate_id")
-    private Category category;
+    private Long cateId;
 }
