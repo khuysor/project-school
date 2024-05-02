@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Data
 @Entity
 @Table (name = "tbl_category")
@@ -15,5 +17,7 @@ public class Category {
     private String name;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
+    @OneToMany(mappedBy = "category")
+    private List<Course>courses;
 }
 
