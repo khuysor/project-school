@@ -30,15 +30,16 @@ public class CategoryController {
     }
 
    @DeleteMapping("{id}")
-    public ResponseEntity<?>deleteByid(@PathVariable Long id){
+    public ResponseEntity<?>deleteByid(@PathVariable("id") Long id){
         categoryServices.delete(id);
         String msg= "Cate with id :"+id+" has been deleted";
        HttpStatus status= HttpStatus.NO_CONTENT;
         return new ResponseEntity<>(msg,status);
     }
     @PutMapping ("{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO){
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody CategoryDTO categoryDTO){
         Category category= CategoryMapper.INSTANCE.toCategory(categoryDTO);
-        return ResponseEntity.ok(categoryServices.update(id,categoryDTO));
+        category =categoryServices.update(id,category);
+        return ResponseEntity.ok(category);
     }
 }

@@ -33,11 +33,10 @@ public class CategoryImpl implements CategoryServices {
     }
 
     @Override
-    public Category update(Long id, CategoryDTO categoryDTO) {
-        this.getCategoryById(id);
-        Category category1 = CategoryMapper.INSTANCE.toCategory(categoryDTO);
-        category1.setId(id);
-        return categoryRepo.save(category1);
+    public Category update(Long id, Category cate) {
+          Category category = getCategoryById(id);
+          cate.setId(category.getId());
+        return categoryRepo.save(cate);
     }
 
     @Override
