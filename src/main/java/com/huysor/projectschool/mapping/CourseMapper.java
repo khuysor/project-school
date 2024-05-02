@@ -6,10 +6,15 @@ import com.huysor.projectschool.entity.Course;
 import com.huysor.projectschool.services.CategoryServices;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 
 @Mapper(componentModel ="spring",uses = {CategoryServices.class})
 public interface CourseMapper {
-    @Mapping(source = "cateId",target = "category")
-    Course courseToCourse(CourseDTO courseDTO);
+//    CourseMapper INSTANCE= Mappers.getMapper(CourseMapper.class);
+    @Mapping(target = "category",source = "cateId")
+   Course toCourse(CourseDTO courseDTO);
+    @Mapping(source = "category.id",target = "cateId")
+    CourseDTO toCourseDTO(Course course);
+
 }
