@@ -5,7 +5,7 @@ import com.huysor.projectschool.entity.Category;
 
 import java.util.List;
 
-public interface CategorySerives {
+public interface CategoryServices {
     List<CategoryDTO>allCategory();
     Category create(CategoryDTO categoryDTO);
     Category update(Long id,CategoryDTO categoryDTO);
