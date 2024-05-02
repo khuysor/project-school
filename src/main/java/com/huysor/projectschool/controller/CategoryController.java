@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CategoryController {
    private final CategoryServices categoryServices;
+
+   @GetMapping
+   public ResponseEntity<?>allCategory(){
+       return ResponseEntity.ok(categoryServices.allCategory());
+   }
     @PostMapping
     public ResponseEntity<?>create(@RequestBody  CategoryDTO categoryDTO) {
         Category category= CategoryMapper.INSTANCE.toCategory(categoryDTO);
@@ -30,5 +35,10 @@ public class CategoryController {
         String msg= "Cate with id :"+id+" has been deleted";
        HttpStatus status= HttpStatus.NO_CONTENT;
         return new ResponseEntity<>(msg,status);
+    }
+    @PutMapping ("{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO){
+        Category category= CategoryMapper.INSTANCE.toCategory(categoryDTO);
+        return ResponseEntity.ok(categoryServices.update(id,categoryDTO));
     }
 }

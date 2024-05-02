@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,10 +21,10 @@ public class CategoryImpl implements CategoryServices {
 
     @Override
     public List<CategoryDTO> allCategory() {
-        List<Category> categories=categoryRepo.findAll();
-        List< CategoryDTO> catedto=  categories.stream()
-                .map(cate->CategoryMapper.INSTANCE.toCategoryDTO(cate)).collect(Collectors.toList());
-        return  catedto;
+        List<Category> categories = categoryRepo.findAll();
+        List<CategoryDTO> catedto = categories.stream()
+                .map(cate -> CategoryMapper.INSTANCE.toCategoryDTO(cate)).collect(Collectors.toList());
+        return catedto;
     }
 
     @Override
@@ -33,19 +34,22 @@ public class CategoryImpl implements CategoryServices {
 
     @Override
     public Category update(Long id, CategoryDTO categoryDTO) {
-        return null;
+        this.getCategoryById(id);
+        Category category1 = CategoryMapper.INSTANCE.toCategory(categoryDTO);
+        category1.setId(id);
+        return categoryRepo.save(category1);
     }
 
     @Override
     public void delete(Long id) {
-      Category category=  getCategoryById(id);
-      categoryRepo.delete(category);
+        Category category = getCategoryById(id);
+        categoryRepo.delete(category);
 
     }
 
     @Override
     public Category getCategoryById(Long id) {
-        return categoryRepo.findById(id).orElseThrow(()->new ApiRequestException("Cate with id : "+id+" not found"));
+        return categoryRepo.findById(id).orElseThrow(() -> new ApiRequestException("Cate with id : " + id + " not found"));
 
     }
 }
