@@ -1,12 +1,12 @@
 package com.huysor.projectschool.services;
 
-import com.huysor.projectschool.dto.CategoryDTO;
+import com.huysor.projectschool.dto.category.CategoryRequestDTO;
 import com.huysor.projectschool.entity.Category;
 
 import java.util.List;
 
 public interface CategoryServices {
-    List<CategoryDTO> allCategory();
+    List<Category> allCategory();
 
     Category create(Category category);
 
