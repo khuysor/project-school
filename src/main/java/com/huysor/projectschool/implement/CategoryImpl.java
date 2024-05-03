@@ -1,7 +1,6 @@
 package com.huysor.projectschool.implement;
 
-import com.huysor.projectschool.controller.CategoryController;
-import com.huysor.projectschool.dto.CategoryDTO;
+import com.huysor.projectschool.dto.category.CategoryRequestDTO;
 import com.huysor.projectschool.entity.Category;
 import com.huysor.projectschool.exception.ApiRequestException;
 import com.huysor.projectschool.mapping.CategoryMapper;
@@ -11,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,12 +17,11 @@ import java.util.stream.Collectors;
 public class CategoryImpl implements CategoryServices {
     private final CategoryRepo categoryRepo;
 
+
     @Override
-    public List<CategoryDTO> allCategory() {
+    public List<Category> allCategory() {
         List<Category> categories = categoryRepo.findAll();
-        List<CategoryDTO> catedto = categories.stream()
-                .map(cate -> CategoryMapper.INSTANCE.toCategoryDTO(cate)).collect(Collectors.toList());
-        return catedto;
+        return categories;
     }
 
     @Override
