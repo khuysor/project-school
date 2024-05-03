@@ -17,7 +17,7 @@ public class Category {
     private String name;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
-//    @OneToMany(mappedBy = "category")
-//    private List<Course>courses;
+    @OneToMany(mappedBy = "category")
+    private List<Course>courses;
 }
 
