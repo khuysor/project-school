@@ -1,9 +1,7 @@
 package com.huysor.projectschool.implement;
 
-import com.huysor.projectschool.dto.CourseDTO;
 import com.huysor.projectschool.entity.Course;
 import com.huysor.projectschool.exception.ApiRequestException;
-import com.huysor.projectschool.mapping.CourseMapper;
 import com.huysor.projectschool.repo.CourseRepo;
 import com.huysor.projectschool.services.CourseServices;
 import lombok.RequiredArgsConstructor;
@@ -43,4 +41,5 @@ public class CourseImpl implements CourseServices {
         Course course =findById(id);
         courseRepo.delete(course);
     }
+
 }
