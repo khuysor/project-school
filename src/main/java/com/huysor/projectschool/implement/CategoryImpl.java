@@ -45,7 +45,7 @@ public class CategoryImpl implements CategoryServices {
 
     @Override
     public Category getCategoryById(Long id) {
-        return categoryRepo.findById(id).orElseThrow(() -> new ApiRequestException("Cate with id : " + id + " not found"));
+        return categoryRepo.findById(id).orElseThrow(() -> new ApiRequestException("Cate with id : %d not found".valueOf(id)));
 
     }
 }

@@ -22,7 +22,7 @@ public class StudentImpl implements StudentServices {
 
     @Override
     public Students findStudentById(Long id) {
-        return  studenRepo.findById(id).orElseThrow(()-> new ApiRequestException("student with id : "+id+"not found" ));
+        return  studenRepo.findById(id).orElseThrow(()-> new ApiRequestException("student with id : %d not found".valueOf(id) ));
     }
 
     @Override

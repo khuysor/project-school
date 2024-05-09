@@ -21,7 +21,7 @@ public class CourseImpl implements CourseServices {
 
     @Override
     public Course findById(Long id) {
-        return courseRepo.findById(id).orElseThrow(() -> new ApiRequestException("Course with id " + id + " not found"));
+        return courseRepo.findById(id).orElseThrow(() -> new ApiRequestException("Course with id : %d not found".valueOf(id)));
     }
 
     @Override
