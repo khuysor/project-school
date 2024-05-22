@@ -5,7 +5,8 @@ import lombok.Data;
 import java.time.LocalDateTime;
 @Data
 public class StudentCreateDTO {
-    private String name;
+    private String fistName;
+    private String lastName;
     private Integer age;
     private String email;
     private String phone;
