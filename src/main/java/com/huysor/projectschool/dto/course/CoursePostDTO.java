@@ -11,7 +11,5 @@ public class CoursePostDTO {
     private String teacherName;
     private String description;
     private BigDecimal price;
-    private LocalDateTime createTime;
-    private LocalDateTime updateTime;
     private Integer cateId;
 }

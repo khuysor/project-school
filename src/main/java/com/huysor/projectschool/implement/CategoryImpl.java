@@ -9,6 +9,7 @@ import com.huysor.projectschool.services.CategoryServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,12 +27,15 @@ public class CategoryImpl implements CategoryServices {
 
     @Override
     public Category create(Category category) {
+        category.setCreateTime(LocalDateTime.now());
+        category.setUpdateTime(LocalDateTime.now());
         return categoryRepo.save(category);
     }
 
     @Override
     public Category update(Long id, Category cate) {
           Category category = getCategoryById(id);
+          cate.setUpdateTime(category.getUpdateTime());
           cate.setId(category.getId());
         return categoryRepo.save(cate);
     }

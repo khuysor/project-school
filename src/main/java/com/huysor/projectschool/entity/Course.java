@@ -1,5 +1,6 @@
 package com.huysor.projectschool.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,9 +17,11 @@ public class Course {
     private String teacherName;
     private String description;
     private BigDecimal price;
+    @Column(updatable = false)
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
     @ManyToOne
     @JoinColumn(name = "cate_id")
+    @JsonBackReference
     private Category category;
 }

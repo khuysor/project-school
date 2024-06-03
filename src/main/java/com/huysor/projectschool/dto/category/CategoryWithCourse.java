@@ -10,7 +10,5 @@ public class CategoryWithCourse {
     private Long id;
     private String code;
     private String name;
-    private LocalDateTime createTime;
-    private LocalDateTime updateTime;
     private List<CourseRequestDTO> coursesList;
 }

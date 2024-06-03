@@ -12,6 +12,7 @@ public interface CourseServices {
     Course create(Course course);
 
     Course update(Long id, Course course);
+    List<Course> findByCategoryId(Long cateId);
 
     void delete(Long id);
 }

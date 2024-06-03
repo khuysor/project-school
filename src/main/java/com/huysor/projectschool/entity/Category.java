@@ -1,5 +1,6 @@
 package com.huysor.projectschool.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,9 +16,11 @@ public class Category {
     private Long id;
     private String code;
     private String name;
+    @Column(updatable = false)
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
     @OneToMany(mappedBy = "category")
+    @JsonManagedReference
     private List<Course>courses;
 }
 
