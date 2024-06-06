@@ -14,9 +14,7 @@ public interface CourseMapper {
     //    CourseMapper INSTANCE= Mappers.getMapper(CourseMapper.class);
     @Mapping(target = "category", source = "cateId")
     Course toCourse(CoursePostDTO courseDTO);
-
+    @Mapping(source = "imageName",target = "imgUrl")
     CourseRequestDTO toCourseDTO(Course course);
-
-
 
 }
