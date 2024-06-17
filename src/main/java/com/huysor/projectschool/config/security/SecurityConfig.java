@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -20,7 +22,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return  http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(author -> {
+        return  http.csrf(AbstractHttpConfigurer::disable).cors(withDefaults()) .authorizeHttpRequests(author -> {
                     author.requestMatchers("/auth/**").permitAll();
                     author.anyRequest().authenticated();
                 }).userDetailsService(userDetailsService).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
