@@ -1,13 +1,18 @@
 package com.huysor.projectschool.entity.user;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-@AllArgsConstructor
+import lombok.RequiredArgsConstructor;
+
 @Getter
+@RequiredArgsConstructor
 public enum Permission {
-    READ("permission:read"),
-    WRITE("permission:write"),
-    UPDATE("permission:update"),
-    DELETE("permission:delete");
-    private String permission;
+    ADMIN_READ("admin:read"),
+    ADMIN_WRITE("admin:write"),
+    ADMIN_DELETE("admin:delete"),
+    ADMIN_EDIT("admin:edit"),
+    OWNER_READ("owner:read"),
+    OWNER_WRITE("owner:write"),
+    OWNER_DELETE("owner:delete"),
+    OWNER_EDIT("owner:edit");
+    private final String permissionName;
 }
