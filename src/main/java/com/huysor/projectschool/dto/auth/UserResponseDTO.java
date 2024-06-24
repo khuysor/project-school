@@ -1,4 +1,4 @@
-package com.huysor.projectschool.Auth;
+package com.huysor.projectschool.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserResponse {
+public class UserResponseDTO {
     private String firstname;
     private String lastname;
     private String username;
-    private String password;
-    private String role;
     private String token;
+    private String role;
 }
