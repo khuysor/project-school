@@ -108,7 +108,7 @@ public class CourseController {
             }
         }
         }
-    @PreAuthorize("hasAuthority('admin:write')")
+        @PreAuthorize("hasAuthority('admin:write')")
         @GetMapping("categories/course")
         public ResponseEntity<?> getAllCourse () {
             List<Course> courses = courseServices.findAll();
