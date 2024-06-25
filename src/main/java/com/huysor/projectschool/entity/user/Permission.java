@@ -13,6 +13,11 @@ public enum Permission {
     OWNER_READ("owner:read"),
     OWNER_WRITE("owner:write"),
     OWNER_DELETE("owner:delete"),
-    OWNER_EDIT("owner:edit");
+    OWNER_EDIT("owner:edit"),
+    MANGER_READ("manager:read"),
+    MANGER_WRITE("manager:write"),
+    MANGER_DELETE("manager:delete"),
+    MANGER_EDIT("manager:edit");
+
     private final String permissionName;
 }

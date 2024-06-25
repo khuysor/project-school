@@ -12,7 +12,9 @@ import java.util.stream.Collectors;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum Role_Enum {
-    OWNER(Set.of(Permission.OWNER_DELETE, Permission.OWNER_EDIT, Permission.OWNER_READ,Permission.OWNER_WRITE)),
+    OWNER(Set.of(Permission.OWNER_DELETE, Permission.OWNER_EDIT, Permission.OWNER_READ,Permission.OWNER_WRITE,
+            Permission.ADMIN_DELETE,Permission.ADMIN_READ,Permission.ADMIN_WRITE,Permission.ADMIN_EDIT,Permission.MANGER_DELETE,Permission.MANGER_WRITE,Permission.MANGER_READ)),
+    MANAGER(Set.of(  Permission.ADMIN_DELETE,Permission.ADMIN_READ,Permission.ADMIN_WRITE,Permission.ADMIN_EDIT,Permission.MANGER_DELETE,Permission.MANGER_WRITE,Permission.MANGER_READ)),
     ADMIN(Set.of(Permission.ADMIN_DELETE, Permission.ADMIN_EDIT, Permission.ADMIN_READ,Permission.ADMIN_WRITE)) ,
     USER(Collections.emptySet()) ;
 
