@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,7 +16,7 @@ public enum Role_Enum {
             Permission.ADMIN_DELETE,Permission.ADMIN_READ,Permission.ADMIN_WRITE,Permission.ADMIN_EDIT,Permission.MANGER_DELETE,Permission.MANGER_WRITE,Permission.MANGER_READ)),
     MANAGER(Set.of(  Permission.ADMIN_DELETE,Permission.ADMIN_READ,Permission.ADMIN_WRITE,Permission.ADMIN_EDIT,Permission.MANGER_DELETE,Permission.MANGER_WRITE,Permission.MANGER_READ)),
     ADMIN(Set.of(Permission.ADMIN_DELETE, Permission.ADMIN_EDIT, Permission.ADMIN_READ,Permission.ADMIN_WRITE)) ,
-    USER(Collections.emptySet()) ;
+    USER(new HashSet<>()) ;
 
     private final Set<Permission> permission;
 
@@ -25,6 +25,7 @@ public enum Role_Enum {
                 .map(permission -> new SimpleGrantedAuthority(permission.getPermissionName()))
                 .collect(Collectors.toSet());
         auth.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
+        System.out.println(auth);
         return auth;
     }
 

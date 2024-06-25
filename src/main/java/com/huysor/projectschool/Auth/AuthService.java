@@ -1,8 +1,11 @@
 package com.huysor.projectschool.Auth;
 
 import com.huysor.projectschool.config.security.JwtServices;
+import com.huysor.projectschool.dto.auth.UpdatePermissionsRequestDTO;
 import com.huysor.projectschool.dto.auth.UserRegisterDTO;
+import com.huysor.projectschool.dto.auth.UserRequest;
 import com.huysor.projectschool.dto.auth.UserResponseDTO;
+import com.huysor.projectschool.entity.user.Permission;
 import com.huysor.projectschool.entity.user.Role_Enum;
 import com.huysor.projectschool.entity.user.User;
 import com.huysor.projectschool.exception.ApiRequestException;
@@ -11,6 +14,9 @@ import com.huysor.projectschool.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +43,7 @@ private final JwtServices jwtServices;
         User user = userRepository
                 .findByUsername(userLogin.getUsername())
                 .orElseThrow(()-> new ApiRequestException("User not found !"));
-            System.out.println(user);
+
         if(passwordEncoder.matches(userLogin.getPassword(),user.getPassword())){
             UserResponseDTO userResponse = UserMapper.INSTANCE.toUserResponse(user);
             userResponse.setToken(jwtServices.generateToken(user));
@@ -46,5 +52,18 @@ private final JwtServices jwtServices;
             throw new ApiRequestException("User password Invalid!");
         }
 
+    }
+
+    public UserRequest updateRolePermission(UpdatePermissionsRequestDTO userUpdatePermissionsRequestDTO) {
+        User user = userRepository
+                .findByUsername(userUpdatePermissionsRequestDTO.getUsername())
+                .orElseThrow(()-> new ApiRequestException("User not found !"));
+        user.setRole(Role_Enum.valueOf(userUpdatePermissionsRequestDTO.getRole()));
+        Set<Permission> permissions = userUpdatePermissionsRequestDTO.getPermissions().stream()
+                .map(Permission::valueOf)
+                .collect(Collectors.toSet());
+        user.setPermissions(permissions);
+
+        return UserMapper.INSTANCE.toUserRequest(userRepository.save(user));
     }
 }

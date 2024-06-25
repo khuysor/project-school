@@ -26,6 +26,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return  http.csrf(AbstractHttpConfigurer::disable).cors(withDefaults()) .authorizeHttpRequests(author -> {
                     author.requestMatchers("/auth/**").permitAll();
+                    author.requestMatchers("/api/categories/course/view/**").permitAll();
                     author.anyRequest().authenticated();
                 }).userDetailsService(userDetailsService).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthentication, UsernamePasswordAuthenticationFilter.class)

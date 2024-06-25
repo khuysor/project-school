@@ -1,9 +1,6 @@
 package com.huysor.projectschool.Auth;
 
-import com.huysor.projectschool.dto.auth.PermissionDTO;
-import com.huysor.projectschool.dto.auth.RoleDTO;
-import com.huysor.projectschool.dto.auth.UserRegisterDTO;
-import com.huysor.projectschool.dto.auth.UserResponseDTO;
+import com.huysor.projectschool.dto.auth.*;
 import com.huysor.projectschool.entity.user.Permission;
 import com.huysor.projectschool.entity.user.Role_Enum;
 import lombok.RequiredArgsConstructor;
@@ -45,10 +42,15 @@ private final AuthService authService;
                 .map(
                         permission ->
                                 PermissionDTO.builder()
-                                        .name(permission.name())
-                                        .permission(permission.getPermissionName())
+                                        .permission(permission.name())
                                         .build())
                 .collect(Collectors.toList());
         return ResponseEntity.ok(permissionDTOList) ;
+    }
+
+
+    @PutMapping("user/permission")
+    public ResponseEntity<?> updateUserPermission(@RequestBody UpdatePermissionsRequestDTO userPermission){
+        return ResponseEntity.ok(authService.updateRolePermission(userPermission));
     }
 }
