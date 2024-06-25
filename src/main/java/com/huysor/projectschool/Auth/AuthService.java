@@ -24,6 +24,7 @@ private final JwtServices jwtServices;
                 .lastname(userRegister.getLastname())
                 .username(userRegister.getUsername())
                 .password(passwordEncoder.encode(userRegister.getPassword()))
+                .permissions(userRegister.getPermissions())
                 .role(Role_Enum.valueOf(userRegister.getRole())).build();
 
         user= userRepository.save(user);
