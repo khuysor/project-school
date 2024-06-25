@@ -5,24 +5,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-
 import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum Role_Enum {
-    OWNER(List.of(Permission.OWNER_DELETE, Permission.OWNER_EDIT, Permission.OWNER_READ,Permission.OWNER_WRITE)),
-    ADMIN(List.of(Permission.ADMIN_DELETE, Permission.ADMIN_EDIT, Permission.ADMIN_READ,Permission.ADMIN_WRITE)) ,
-    USER(Collections.emptyList()) ;
+    OWNER(Set.of(Permission.OWNER_DELETE, Permission.OWNER_EDIT, Permission.OWNER_READ,Permission.OWNER_WRITE)),
+    ADMIN(Set.of(Permission.ADMIN_DELETE, Permission.ADMIN_EDIT, Permission.ADMIN_READ,Permission.ADMIN_WRITE)) ,
+    USER(Collections.emptySet()) ;
 
-    private final List<Permission>permission;
+    private final Set<Permission> permission;
 
-    public List<SimpleGrantedAuthority> getAuthority(List<Permission> permissions) {
+    public Set<SimpleGrantedAuthority> getAuthority(Set<Permission> permissions) {
         var auth = permissions.stream()
                 .map(permission -> new SimpleGrantedAuthority(permission.getPermissionName()))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
         auth.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
         return auth;
     }

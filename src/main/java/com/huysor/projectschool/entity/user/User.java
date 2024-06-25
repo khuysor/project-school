@@ -9,7 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -31,7 +32,7 @@ public class User implements UserDetails {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private List<Permission> permissions;
+    private Set<Permission> permissions;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.getAuthority(permissions);
