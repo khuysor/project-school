@@ -1,11 +1,19 @@
 package com.huysor.projectschool.Auth;
 
+import com.huysor.projectschool.dto.auth.PermissionDTO;
+import com.huysor.projectschool.dto.auth.RoleDTO;
 import com.huysor.projectschool.dto.auth.UserRegisterDTO;
 import com.huysor.projectschool.dto.auth.UserResponseDTO;
-import com.huysor.projectschool.entity.user.User;
+import com.huysor.projectschool.entity.user.Permission;
+import com.huysor.projectschool.entity.user.Role_Enum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -23,9 +31,24 @@ private final AuthService authService;
         return ResponseEntity.ok(userResponse);
     }
 
-    @GetMapping
+    @GetMapping("roles")
     public ResponseEntity<?> create(){
-        User user = new User();
-        return ResponseEntity.ok("Hello World") ;
+        List<RoleDTO>roleDTOS= Arrays.stream(Role_Enum.values())
+                .map(roleEnum -> RoleDTO.builder().roleName(roleEnum.name()).build())
+                .toList();
+        return ResponseEntity.ok(roleDTOS) ;
+    }
+    @GetMapping("role/permission")
+    public ResponseEntity<?>getUserPermission(){
+        List<PermissionDTO>permissionDTOList= Arrays
+                .stream(Permission.values())
+                .map(
+                        permission ->
+                                PermissionDTO.builder()
+                                        .name(permission.name())
+                                        .permission(permission.getPermissionName())
+                                        .build())
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(permissionDTOList) ;
     }
 }
