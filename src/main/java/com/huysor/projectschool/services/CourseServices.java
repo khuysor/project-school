@@ -1,23 +1,25 @@
 package com.huysor.projectschool.services;
 
+import com.huysor.projectschool.dto.request.CourseReq;
+import com.huysor.projectschool.dto.request.FilterDate;
+import com.huysor.projectschool.dto.request.PageReq;
+import com.huysor.projectschool.dto.response.ResultResp;
 import com.huysor.projectschool.entity.Course;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface CourseServices {
-    List<Course> findAll();
+    ResultResp findAll(PageReq pageReq, FilterDate filterDate);
 
     Course findById(Long id);
 
-    Course createWithImage(MultipartFile file,Course course);
-    Course create(Course course);
+    ResultResp createWithImage(MultipartFile file, CourseReq courseReq);
 
-    Course update(MultipartFile file, Course course);
     List<Course> findByCategoryId(Long cateId);
 
     void delete(Long id);
-//    String getFileName(String name);
 
     Course findByName(String name);
+    ResultResp countCourse();
 }
