@@ -1,22 +1,25 @@
 package com.huysor.projectschool.mapping;
 
-import com.huysor.projectschool.dto.category.CategoryPostDTO;
-import com.huysor.projectschool.dto.category.CategoryRequestDTO;
-import com.huysor.projectschool.dto.category.CategoryWithCourse;
+import com.huysor.projectschool.dto.request.CategoryReq;
+import com.huysor.projectschool.dto.response.CategoryResp;
 import com.huysor.projectschool.entity.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
-    CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
 
-    CategoryRequestDTO toCateRequest(Category category);
+    @Mapping(source = "categoryName", target = "name")
+    Category toCategory(CategoryReq categoryReq);
 
-    @Mapping(target = "id", ignore = true)
-    Category toCategoryPost(CategoryPostDTO categoryPostDTO);
+    @Mapping(source = "name", target = "categoryName")
+    CategoryResp toCategoryResp(Category category);
 
-    @Mapping(target = "coursesList", source = "courses")
-    CategoryWithCourse toCategoryWithCourse(Category category);
+
+    @Mapping(target = "createTime", ignore = true)
+    @Mapping(target = "updateTime", ignore = true)
+    @Mapping(target = "name",source = "categoryName")
+    @Mapping(target = "code",source = "code")
+    void updateEntityFromDto(CategoryReq categoryReq, @MappingTarget Category cate);
 }

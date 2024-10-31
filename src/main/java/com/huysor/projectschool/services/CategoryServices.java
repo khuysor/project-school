@@ -1,18 +1,19 @@
 package com.huysor.projectschool.services;
 
-import com.huysor.projectschool.dto.category.CategoryRequestDTO;
-import com.huysor.projectschool.entity.Category;
-
-import java.util.List;
+import com.huysor.projectschool.dto.request.CategoryReq;
+import com.huysor.projectschool.dto.request.FilterDate;
+import com.huysor.projectschool.dto.request.PageReq;
+import com.huysor.projectschool.dto.response.ResultResp;
 
 public interface CategoryServices {
-    List<Category> allCategory();
+    ResultResp allCategory();
 
-    Category create(Category category);
+    ResultResp allCateWithPage(PageReq pageReq, FilterDate filterDate);
 
-    Category update(Long id, Category category);
+    ResultResp create(CategoryReq category);
 
-    void delete(Long id);
+    ResultResp countCategory();
+    ResultResp delete(Long id);
 
-    Category getCategoryById(Long id);
+    ResultResp getCategoryById(Long id);
 }
