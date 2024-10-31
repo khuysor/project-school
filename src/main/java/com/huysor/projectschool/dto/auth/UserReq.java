@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Set;
 
 @Data
-public class UserRegisterDTO {
+public class UserReq {
     private String firstname;
     private String lastname;
     private String username;

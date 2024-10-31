@@ -1,5 +1,6 @@
 package com.huysor.projectschool.entity.user;
 
+import com.huysor.projectschool.entity.AuditEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Table(name = "tbl_user")
-public class User implements UserDetails {
+public class User extends AuditEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

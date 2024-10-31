@@ -10,5 +10,5 @@ public class UserRequest {
     private String lastname;
     private String username;
     private String role;
-    private List<PermissionDTO> permission;
+    private List<String> permission;
 }

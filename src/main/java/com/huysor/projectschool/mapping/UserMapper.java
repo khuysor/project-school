@@ -1,7 +1,7 @@
 package com.huysor.projectschool.mapping;
 
 import com.huysor.projectschool.dto.auth.UserRequest;
-import com.huysor.projectschool.dto.auth.UserResponseDTO;
+import com.huysor.projectschool.dto.auth.UserResp;
 import com.huysor.projectschool.entity.user.Permission;
 import com.huysor.projectschool.entity.user.User;
 import org.mapstruct.Mapper;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public interface UserMapper {
     UserMapper INSTANCE= Mappers.getMapper(UserMapper.class);
     @Mapping(source = "permissions", target = "permission")
-    UserResponseDTO toUserResponse(User user);
+    UserResp toUserResponse(User user);
 
     @Mapping(source = "permissions", target = "permission")
     UserRequest toUserRequest(User user);

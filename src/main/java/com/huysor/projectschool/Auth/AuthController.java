@@ -1,5 +1,6 @@
 package com.huysor.projectschool.Auth;
 
+import com.huysor.projectschool.constant.ApiConstant;
 import com.huysor.projectschool.dto.auth.*;
 import com.huysor.projectschool.entity.user.Permission;
 import com.huysor.projectschool.entity.user.Role_Enum;
@@ -14,43 +15,46 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("auth")
+
 public class AuthController {
-private final AuthService authService;
-    @PostMapping("register")
-    public ResponseEntity<?>register(@RequestBody UserRegisterDTO userRegister) {
-        UserResponseDTO userResponse =authService.register(userRegister);
-        return ResponseEntity.ok(userResponse);
-    }
-    @PostMapping("authentication")
-    public ResponseEntity<?>login(@RequestBody UserLogin userLogin){
-        UserResponseDTO userResponse = authService.login(userLogin);
+    private final AuthService authService;
+
+    @PostMapping(ApiConstant.ApiRegister)
+    public ResponseEntity<?> register(@RequestBody UserReq userRegister) {
+        UserResp userResponse = authService.register(userRegister);
         return ResponseEntity.ok(userResponse);
     }
 
-    @GetMapping("roles")
-    public ResponseEntity<?> create(){
-        List<RoleDTO>roleDTOS= Arrays.stream(Role_Enum.values())
-                .map(roleEnum -> RoleDTO.builder().roleName(roleEnum.name()).build())
-                .toList();
-        return ResponseEntity.ok(roleDTOS) ;
+    @PostMapping(ApiConstant.ApiLogin)
+    public ResponseEntity<?> login(@RequestBody UserLogin userLogin) {
+        UserResp userResponse = authService.login(userLogin);
+        return ResponseEntity.ok(userResponse);
     }
-    @GetMapping("role/permission")
-    public ResponseEntity<?>getUserPermission(){
-        List<PermissionDTO>permissionDTOList= Arrays
+
+    @GetMapping(ApiConstant.ApiRole)
+    public ResponseEntity<?> create() {
+        List<RoleResp> roleResp = Arrays.stream(Role_Enum.values())
+                .map(roleEnum -> RoleResp.builder().roleName(roleEnum.name()).build())
+                .toList();
+        return ResponseEntity.ok(roleResp);
+    }
+
+    @GetMapping(ApiConstant.ApiRolePermission)
+    public ResponseEntity<?> getUserPermission() {
+        List<PermissionResp> permissionRespList = Arrays
                 .stream(Permission.values())
                 .map(
                         permission ->
-                                PermissionDTO.builder()
+                                PermissionResp.builder()
                                         .permission(permission.name())
                                         .build())
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(permissionDTOList) ;
+        return ResponseEntity.ok(permissionRespList);
     }
 
 
-    @PutMapping("user/permission")
-    public ResponseEntity<?> updateUserPermission(@RequestBody UpdatePermissionsRequestDTO userPermission){
+    @PutMapping(ApiConstant.ApiUserPermission)
+    public ResponseEntity<?> updateUserPermission(@RequestBody UpdatePermissionsReq userPermission) {
         return ResponseEntity.ok(authService.updateRolePermission(userPermission));
     }
 }

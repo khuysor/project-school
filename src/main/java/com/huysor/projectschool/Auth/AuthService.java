@@ -1,10 +1,10 @@
 package com.huysor.projectschool.Auth;
 
 import com.huysor.projectschool.config.security.JwtServices;
-import com.huysor.projectschool.dto.auth.UpdatePermissionsRequestDTO;
-import com.huysor.projectschool.dto.auth.UserRegisterDTO;
+import com.huysor.projectschool.dto.auth.UpdatePermissionsReq;
+import com.huysor.projectschool.dto.auth.UserReq;
 import com.huysor.projectschool.dto.auth.UserRequest;
-import com.huysor.projectschool.dto.auth.UserResponseDTO;
+import com.huysor.projectschool.dto.auth.UserResp;
 import com.huysor.projectschool.entity.user.Permission;
 import com.huysor.projectschool.entity.user.Role_Enum;
 import com.huysor.projectschool.entity.user.User;
@@ -24,7 +24,7 @@ public class AuthService {
 private final PasswordEncoder passwordEncoder;
 private  final UserRepo userRepository;
 private final JwtServices jwtServices;
-    public UserResponseDTO register(UserRegisterDTO userRegister) {
+    public UserResp register(UserReq userRegister) {
         User user = User.builder()
                 .firstname(userRegister.getFirstname())
                 .lastname(userRegister.getLastname())
@@ -34,18 +34,18 @@ private final JwtServices jwtServices;
                 .role(Role_Enum.valueOf(userRegister.getRole())).build();
 
         user= userRepository.save(user);
-        UserResponseDTO userResponse = UserMapper.INSTANCE.toUserResponse(user);
+        UserResp userResponse = UserMapper.INSTANCE.toUserResponse(user);
         userResponse.setToken(jwtServices.generateToken(user));
         return userResponse;
     }
 
-    public UserResponseDTO login(UserLogin userLogin) {
+    public UserResp login(UserLogin userLogin) {
         User user = userRepository
                 .findByUsername(userLogin.getUsername())
                 .orElseThrow(()-> new ApiRequestException("User not found !"));
 
         if(passwordEncoder.matches(userLogin.getPassword(),user.getPassword())){
-            UserResponseDTO userResponse = UserMapper.INSTANCE.toUserResponse(user);
+            UserResp userResponse = UserMapper.INSTANCE.toUserResponse(user);
             userResponse.setToken(jwtServices.generateToken(user));
             return userResponse;
         } else {
@@ -54,12 +54,12 @@ private final JwtServices jwtServices;
 
     }
 
-    public UserRequest updateRolePermission(UpdatePermissionsRequestDTO userUpdatePermissionsRequestDTO) {
+    public UserRequest updateRolePermission(UpdatePermissionsReq userUpdatePermissionsReq) {
         User user = userRepository
-                .findByUsername(userUpdatePermissionsRequestDTO.getUsername())
+                .findByUsername(userUpdatePermissionsReq.getUsername())
                 .orElseThrow(()-> new ApiRequestException("User not found !"));
-        user.setRole(Role_Enum.valueOf(userUpdatePermissionsRequestDTO.getRole()));
-        Set<Permission> permissions = userUpdatePermissionsRequestDTO.getPermissions().stream()
+        user.setRole(Role_Enum.valueOf(userUpdatePermissionsReq.getRole()));
+        Set<Permission> permissions = userUpdatePermissionsReq.getPermissions().stream()
                 .map(Permission::valueOf)
                 .collect(Collectors.toSet());
         user.setPermissions(permissions);

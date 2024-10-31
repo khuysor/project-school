@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PermissionDTO {
+public class PermissionResp {
     private String permission;
 }
