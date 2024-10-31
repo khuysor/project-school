@@ -1,13 +1,27 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/project_web
-    username: "postgres"
-    password: ""
+    url: jdbc:mysql://localhost:3306/project_web?useSSL=false&serverTimezone=Asia/Phnom_Penh&characterEncoding=UTF-8
+    username: root
+    password: root
+
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
         show_sql: true
         format_sql: true
+  jackson:
+    time-zone: UTC
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      enabled: true
+
+  web:
+    resources:
+      static-locations: file://${user.dir}/upload/file/
+server:
+  port: 8080
