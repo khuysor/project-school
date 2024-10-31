@@ -5,6 +5,7 @@ import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
 public class ImageUtil {
+    // use for compress Image to be bye for store in db
     public static byte[] compressImage(byte[] data) {
         Deflater deflater = new Deflater();
         deflater.setLevel(Deflater.BEST_COMPRESSION);
@@ -25,7 +26,7 @@ public class ImageUtil {
     }
 
 
-
+    // use for decompress byte from db to convert to image
     public static byte[] decompressImage(byte[] data) {
         Inflater inflater = new Inflater();
         inflater.setInput(data);
@@ -40,5 +41,8 @@ public class ImageUtil {
         } catch (Exception ignored) {
         }
         return outputStream.toByteArray();
+    }
+   public static String getFileExtension(String fileName) {
+       return fileName.substring(fileName.lastIndexOf('.') + 1);
     }
 }

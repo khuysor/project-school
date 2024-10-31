@@ -1,27 +1,20 @@
-package com.huysor.projectschool.implement;
+package com.huysor.projectschool.services.implement;
 
-import com.huysor.projectschool.dto.files.FileAttachmentResponse;
 import com.huysor.projectschool.entity.FileAttachments;
-import com.huysor.projectschool.exception.ApiRequestException;
-import com.huysor.projectschool.mapping.FileMapper;
 import com.huysor.projectschool.repo.FileAttachmentRepo;
 import com.huysor.projectschool.services.FileAttachmentServices;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -59,18 +52,6 @@ public class FileAttachmentImpl implements FileAttachmentServices {
       }
     }
 
-    @Override
-    public FileAttachmentResponse toGetFileById(Long id) {
-       Optional<FileAttachments> fileAttachments = fileAttachmentRepo.findById(id);
-       if(fileAttachments.isPresent()){
-           FileAttachmentResponse fileAttachmentResponse = FileMapper.INSTANCE.toAttachmentResponse(fileAttachments.get());
-           String fileUrl= ServletUriComponentsBuilder.fromCurrentContextPath().path("api/view/").path(fileAttachments.get().getFileName()).toUriString();
-           fileAttachmentResponse.setFilePath(fileUrl);
-           return fileAttachmentResponse;
-       }else{
-           throw new IllegalArgumentException("File not found");
-       }
-    }
 
     @Override
     public String toGetFileByFileName(String fileName) {

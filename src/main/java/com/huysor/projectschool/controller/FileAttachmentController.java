@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,10 +22,7 @@ public class FileAttachmentController {
     public ResponseEntity<?>uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
         return ResponseEntity.ok(fileAttachmentServices.toUpload(file));
     }
-    @GetMapping("api/upload/{id}")
-    public ResponseEntity<?>getFile(@PathVariable("id")Long id) throws Exception {
-        return ResponseEntity.ok(fileAttachmentServices.toGetFileById(id));
-    }
+
     @GetMapping("api/view/{name}")
     public ResponseEntity<?> viewFile(@PathVariable("name") String name) throws Exception {
         String fileName= fileAttachmentServices.toGetFileByFileName(name);
