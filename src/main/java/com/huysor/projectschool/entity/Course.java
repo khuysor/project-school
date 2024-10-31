@@ -1,18 +1,14 @@
 package com.huysor.projectschool.entity;
-import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Null;
 import lombok.Data;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+@Data
 @Entity
 @Table(name = "tbl_course")
-@Data
-public class Course {
+public class Course extends AuditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,15 +17,9 @@ public class Course {
     private String description;
     private BigDecimal price;
     @Column(nullable = true)
-    private byte fileByte [];
-    @Column(nullable = true)
     private String imageName;
-    @Column(updatable = false)
-    private LocalDateTime createTime=LocalDateTime.now();
-    private LocalDateTime updateTime=LocalDateTime.now();
-
     @ManyToOne
-    @JoinColumn(name = "cate_id")
+    @JoinColumn(name = "category_id",nullable = false)
     @JsonBackReference
     private Category category;
 
