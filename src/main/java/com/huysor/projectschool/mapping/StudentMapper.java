@@ -1,28 +1,17 @@
 package com.huysor.projectschool.mapping;
 
-import com.huysor.projectschool.dto.students.StudentCreateDTO;
+import com.huysor.projectschool.dto.request.StudentReq;
+import com.huysor.projectschool.dto.response.StudentResp;
 import com.huysor.projectschool.entity.Students;
-import com.huysor.projectschool.enums.GenderEnum;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
-
-@Mapper
+import org.mapstruct.MappingTarget;
+@Mapper(componentModel = "spring")
 public interface StudentMapper {
-    StudentMapper INSTANCE= Mappers.getMapper(StudentMapper.class);
-    StudentCreateDTO toStudentDTO(Students students);
+    @Mapping(target = "createTime", ignore = true)
+    @Mapping(target = "updateTime", ignore = true)
+    void updateEntityFromDto(StudentReq studentReq, @MappingTarget Students students);
 
-    @Mapping(source = "gender", target = "gender", qualifiedByName = "stringToGenderEnum")
-    Students toStudents(StudentCreateDTO studentCreateDTO);
-
-    @Named("stringToGenderEnum")
-    default GenderEnum stringToGenderEnum(String gender) {
-        return GenderEnum.fromValue(gender);
-    }
-
-    @Named("genderEnumToString")
-    default String genderEnumToString(GenderEnum gender) {
-        return gender == null ? null : gender.name();
-    }
+    Students toStudents(StudentReq studentReq);
+    StudentResp toStudentResp(Students students);
 }

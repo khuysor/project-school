@@ -1,53 +1,46 @@
 package com.huysor.projectschool.controller;
 
-import com.huysor.projectschool.dto.students.StudentCreateDTO;
-import com.huysor.projectschool.entity.Students;
-import com.huysor.projectschool.mapping.StudentMapper;
+import com.huysor.projectschool.constant.ApiConstant;
+import com.huysor.projectschool.dto.request.FilterDate;
+import com.huysor.projectschool.dto.request.PageReq;
+import com.huysor.projectschool.dto.request.StudentReq;
+import com.huysor.projectschool.dto.response.ResultResp;
 import com.huysor.projectschool.services.StudentServices;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import static com.huysor.projectschool.utils.DateUtil.parseAndValidateDate;
 
-@RequiredArgsConstructor
 @RestController
-@RequestMapping("api/students")
-@PreAuthorize("hasRole('ADMIN')")
+@RequiredArgsConstructor
 public class StudentController {
     private final StudentServices studentServices;
 
-    @PostMapping
-    public ResponseEntity<?> createStudent(@RequestBody StudentCreateDTO studentCreateDTO) {
-        Students students = StudentMapper.INSTANCE.toStudents(studentCreateDTO);
-        studentServices.createStudent(students);
-        return ResponseEntity.ok(students);
+    @PostMapping(ApiConstant.ApiStudent)
+    public ResultResp saveOrUpdate(@RequestBody StudentReq studentReq) {
+        return studentServices.addStudent(studentReq);
     }
 
-    @GetMapping
-    public ResponseEntity<?> getStudents() {
-        List<Students> students = studentServices.allStudent();
-        return ResponseEntity.ok(students);
+    @GetMapping(ApiConstant.ApiStudent)
+    public ResultResp getAllStudent(@RequestParam(value = "_pageIndex", defaultValue = "1") int pageIndex,
+                                    @RequestParam(value = "_pageSize", defaultValue = "25") int pageSize,
+                                    @RequestParam(value = "startDate", required = false) String startDate,
+                                    @RequestParam(value = "endDate", required = false) String endDate) {
+        FilterDate filterDate = new FilterDate();
+        filterDate.setStartDate(parseAndValidateDate(startDate));
+        filterDate.setEndDate(parseAndValidateDate(endDate));
+        PageReq pageReq = new PageReq(pageIndex, pageSize);
+        return studentServices.allStudentWithPage(pageReq, filterDate);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<?> getStudentById(@RequestParam("id") Long id) {
-        Students students = studentServices.findStudentById(id);
-        return ResponseEntity.ok(students);
+    @GetMapping(ApiConstant.ApiStudentCount)
+    public ResultResp countStudent() {
+        return studentServices.countStudent();
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<?> updateStudent(@PathVariable("id") Long id, @RequestBody StudentCreateDTO studentCreateDTO) {
-        Students students = StudentMapper.INSTANCE.toStudents(studentCreateDTO);
-        studentServices.updateStudent(id, students);
-        return ResponseEntity.ok(students);
+    @GetMapping(ApiConstant.ApiStudentAll)
+    public ResultResp getAllStudent() {
+        return studentServices.allStudents();
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteStudent(@PathVariable("id") Long id) {
-        studentServices.deleteStudent(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Student deleted successfully");
-    }
 }
